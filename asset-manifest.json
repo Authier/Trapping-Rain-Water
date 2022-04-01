@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Trapping-Rain-Water/static/css/main.46d99266.css",
+    "main.js": "/Trapping-Rain-Water/static/js/main.5eeee3a5.js",
+    "index.html": "/Trapping-Rain-Water/index.html",
+    "main.46d99266.css.map": "/Trapping-Rain-Water/static/css/main.46d99266.css.map",
+    "main.5eeee3a5.js.map": "/Trapping-Rain-Water/static/js/main.5eeee3a5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.46d99266.css",
+    "static/js/main.5eeee3a5.js"
+  ]
+}
