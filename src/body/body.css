@@ -55,3 +55,14 @@
     background-image: radial-gradient(#1d1d86, #1c1cab);
     box-shadow: 0 0 3px 0 black;
 }
+
+.body-number-flooded-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    /* border: red solid; */
+}
+
+#blocks-flooded {
+    margin: 0;
+}

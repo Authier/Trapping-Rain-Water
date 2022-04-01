@@ -33,7 +33,6 @@ export default function Box (props) {
 
     function handleClick () {
         props.changeBox(props.rowNumber, props.columnNumber)
-        console.log(props.element)
     }
 
     return (

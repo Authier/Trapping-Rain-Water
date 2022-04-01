@@ -7,13 +7,13 @@ export default function Header () {
     return (
         <div className="header-container">
             <div className="header-container-left">
-                Header Left
+                Authier
             </div>
             <div className="header-container-middle">
-                Header Middle
+                Trapping Rain Water
             </div>
             <div className="header-container-right">
-                Header Right
+                Authier
             </div>
         </div>
     )

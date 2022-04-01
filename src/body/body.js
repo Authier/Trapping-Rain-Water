@@ -14,16 +14,24 @@ export default function Body () {
     const [displayRows, setDisplayRows] = React.useState(null)
 
     const [gridColumns, setGridColumns] = React.useState(0)
+    const [doClearWater, setDoClearWater] = React.useState(false)
+    const [isFlooded, setIsFlooded] = React.useState(false)
+    const [blocksFlooded, setBlocksFlooded] = React.useState(0)
+    
 
     const ref = React.useRef(null)
 
     function changeBox (rowNum, colNum) {
+        if (isFlooded) {
+            ClearWater()
+        }
+
         let lookAtRow = rowNum;
         let lookAtCol = colNum;
         if (boxMain[lookAtRow][lookAtCol].element === "air") {
             for (let i = boxMain.length - 1; i >= 0; i--) {
                 const element = boxMain[i][lookAtCol].element
-                if (element === "air") {
+                if (element === "air" || element === "water") {
                     lookAtRow = i;
                     break
                 }
@@ -31,7 +39,7 @@ export default function Body () {
         } else {
             for (let i = 0; i < boxMain.length; i++) {
                 const element = boxMain[i][lookAtCol].element
-                if (element !== "air") {
+                if (element !== "air" && element !== "water") {
                     lookAtRow = i;
                     break
                 }
@@ -121,13 +129,31 @@ export default function Body () {
             }
             main.push(rows) 
         }
+
+        setIsFlooded(false)
         setBoxMain(main) 
 
         /* End of array birth */
     }
 
     function ClearWater () {
-        
+        setBoxMain(prevBoxMain => {
+            const oldBoxMain = prevBoxMain;
+            const rowLength = oldBoxMain.length;
+            const colLength = oldBoxMain[0].length;
+
+            for (let col = 0; col < colLength; col++) {
+               for (let row = rowLength - 1; row >= 0; row--) {
+                   if (oldBoxMain[row][col].element === "water") {
+                        oldBoxMain[row][col].element = "air";
+                   }
+               }
+            }
+            return oldBoxMain;
+        });
+        setIsFlooded(false)
+        setDoClearWater(false)
+        setDetectChange(prev => prev + 1)
     }
 
     function Flood () {
@@ -142,7 +168,8 @@ export default function Body () {
         for (let column = 0; column < boxMain[0].length; column++) {
             let bottom = boxMain.length - 1;
             let height = 0;
-            while (boxMain[bottom][column].element === "land") {
+            
+            while (bottom >= 0 && boxMain[bottom][column].element === "land") {
                 height++;
                 bottom--;
             }
@@ -172,7 +199,6 @@ export default function Body () {
                 let fillUp = Water[col]
                 let bottom = rowLength - 1;
                 while (fillUp > 0) {
-                    console.log(fillUp)
                     if (oldBoxMain[bottom][col].element !== "land") {
                         oldBoxMain[bottom][col].element = "water";
                         fillUp--;
@@ -183,11 +209,15 @@ export default function Body () {
             return oldBoxMain;
         });
 
+
+        setBlocksFlooded(Water.reduce(function (a, b) {return a + b; }, 0))
+        setIsFlooded(true)
+        setDoClearWater(true)
         setDetectChange(prev => prev + 1)
     }
 
     function RandomNumber (min, max) {
-        return Math.floor(Math.pow(Math.random() * max^2, 0.90));
+        return Math.floor(Math.pow(Math.random() * max^2, 0.90)) - min;
         // return Math.floor(Math.random() * (max - min) + min)
     }
 
@@ -226,9 +256,27 @@ export default function Body () {
                 </div>
             </div>
             <div className='body-flood'>
-                <button id='body-button' onClick={Clear}>Clear</button>
+                {
+                    doClearWater ? 
+                    <button id='body-button' onClick={ClearWater}>Clear Water</button>
+                    :
+                    <button id='body-button' onClick={Clear}>Clear</button>
+                }       
                 <button id='body-button' onClick={Flood}>FLOOD!</button>
                 <button id='body-button' onClick={Random}>Random</button>
+            </div>
+            <div className='body-number-flooded-container'>
+                {
+                    isFlooded ? 
+                    <>
+                        <h1 id='blocks-flooded'>
+                            Blocks Flooded: {blocksFlooded}
+                        </h1>
+                    </>
+                    :
+                    <>
+                    </>
+                }
             </div>
         </div>
     )

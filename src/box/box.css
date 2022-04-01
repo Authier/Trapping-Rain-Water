@@ -1,5 +1,5 @@
 .box-main {
     margin: 0;
-    border: 1px dotted white;
+    border: 1px inset black;
     cursor: pointer;
 }
