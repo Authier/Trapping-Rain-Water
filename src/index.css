@@ -1,6 +1,7 @@
 body {
   margin: 0;
-
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   background-image: radial-gradient(#a9a9a9, #828282);
   background-attachment: fixed;
+  overflow: hidden;
 }

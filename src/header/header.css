@@ -22,15 +22,30 @@
 }
 
 .header-container-left {
+    font-size: 24px;
     justify-content: flex-start;
 }
 
 .header-container-middle {
+    animation: title 180s infinite forwards;
+    font-size: 34px;
     justify-content: center;
-
 }
 
 .header-container-right {
+    font-size: 24px;
     justify-content: flex-end;
     
+}
+
+@keyframes title {
+    0% {
+        color: black;
+    }
+    50% {
+        color: blue;
+    }
+    100% {
+        color: black;
+    }
 }
